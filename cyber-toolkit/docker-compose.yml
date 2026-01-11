@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+mobsf:
+image: opensecurity/mobsf:latest
+container_name: mobsf
+ports:
+- "8000:8000"
+volumes:
+- ./mobsf_data:/root/.mobsf
+restart: unless-stopped
+
+zap:
+image: owasp/zap2docker-stable
+container_name: zap
+command: zap.sh -daemon -port 8090 -host 0.0.0.0 -config api.disablekey=true
+ports:
+- "8090:8090"
+volumes:
+- ./zap_data:/zap/wrk
+restart: unless-stopped
+
+web-scanner:
+build:
+context: .
+dockerfile: docker/web-scanner/Dockerfile
+container_name: web_scanner_cli
+volumes:
+- ./:/workspace:rw
+working_dir: /workspace/web-scanner
+entrypoint: [ "python3", "scanner.py" ]
+tty: true
+# run as CLI; example: docker compose run --rm web-scanner example.com --stdout
+
+apk-analyzer:
+build:
+context: .
+dockerfile: docker/apk-analyzer/Dockerfile
+container_name: apk_analyzer_cli
+volumes:
+- ./:/workspace:rw
+working_dir: /workspace/apk-analyzer
+entrypoint: [ "python3", "analyze.py" ]
+tty: true
+# use: docker compose run --rm apk-analyzer /path/to/app.apk --out -
