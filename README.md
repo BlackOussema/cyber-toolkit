@@ -1,261 +1,272 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" alt="Python">
-  <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg" alt="Platform">
-  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
-  <img src="https://img.shields.io/badge/Version-1.0.0-orange.svg" alt="Version">
-</p>
+# 🛡️ Cyber Toolkit: Multi-Platform Security Analysis Suite
 
-<h1 align="center">🛡️ Cyber Toolkit</h1>
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Version](https://img.shields.io/badge/Version-1.0.0-orange.svg)
 
-<p align="center">
-  <strong>Professional Multi-Platform Security Analysis Suite</strong>
-</p>
+## Overview
 
-<p align="center">
-  A comprehensive security toolkit for web vulnerability scanning and Android APK static analysis.<br>
-  Designed for security researchers, penetration testers, and developers.
-</p>
+Cyber Toolkit is a comprehensive, multi-platform security analysis suite designed for security researchers, penetration testers, and developers. It provides robust functionalities for both web vulnerability scanning and Android APK static analysis, making it an invaluable tool for identifying security weaknesses across different application types.
 
----
-
-## 🚀 Features
+## Features
 
 ### Web Scanner
-- **Security Header Analysis** - Checks for CSP, X-Frame-Options, HSTS, and more
-- **Technology Detection** - Identifies web frameworks, servers, and libraries
-- **SSL/TLS Verification** - Validates certificate configuration
-- **Robots.txt Analysis** - Discovers hidden paths and directives
-- **OWASP ZAP Integration** - Optional spider scanning for deeper analysis
+*   **Security Header Analysis**: Automatically checks for critical security headers such as Content-Security-Policy (CSP), X-Frame-Options, HTTP Strict Transport Security (HSTS), and more.
+*   **Technology Detection**: Identifies underlying web frameworks, server technologies, and client-side libraries.
+*   **SSL/TLS Verification**: Validates SSL/TLS certificate configurations and identifies potential misconfigurations.
+*   **Robots.txt Analysis**: Parses `robots.txt` files to discover disallowed paths and potentially sensitive directories.
+*   **OWASP ZAP Integration**: Offers optional integration with OWASP ZAP for deeper, dynamic application security testing (DAST) including spidering and active scanning.
 
 ### APK Analyzer
-- **Manifest Parsing** - Extracts permissions, components, and security flags
-- **Secret Detection** - Finds API keys, credentials, and sensitive data
-- **Dangerous Permission Identification** - Highlights privacy-invasive permissions
-- **Security Scoring** - Calculates risk score based on findings
-- **MobSF Integration** - Optional automated mobile security analysis
+*   **Manifest Parsing**: Extracts detailed information from AndroidManifest.xml, including permissions, components, and security flags.
+*   **Secret Detection**: Scans for hardcoded sensitive information such as API keys, credentials, and other confidential data within the APK.
+*   **Dangerous Permission Identification**: Highlights permissions that could pose privacy or security risks to users.
+*   **Security Scoring**: Calculates a risk score for the APK based on identified vulnerabilities and misconfigurations.
+*   **MobSF Integration**: Provides optional integration with Mobile Security Framework (MobSF) for advanced automated mobile security analysis.
 
 ### Report Generator
-- **Modern HTML Dashboard** - Beautiful, responsive security reports
-- **Security Score Visualization** - At-a-glance risk assessment
-- **Detailed Findings** - Comprehensive breakdown of vulnerabilities
-- **Export Ready** - Professional reports for stakeholders
+*   **Modern HTML Dashboard**: Generates beautiful, responsive HTML security reports that are easy to navigate and understand.
+*   **Security Score Visualization**: Presents an at-a-glance risk assessment with visual indicators.
+*   **Detailed Findings**: Provides a comprehensive breakdown of all identified vulnerabilities, misconfigurations, and potential risks.
+*   **Export Ready**: Produces professional-grade reports suitable for stakeholders and compliance documentation.
 
----
-
-## 📦 Installation
+## Installation
 
 ### Prerequisites
-- Python 3.8 or higher
-- Java JRE 11+ (for APK analysis)
-- Git
+*   Python 3.8 or higher
+*   Java JRE 11+ (required for APK analysis tools like `apktool` and `jadx`)
+*   Git
 
-### Quick Install
+### Quick Install (Local)
 
-```bash
-# Clone the repository
-git clone https://github.com/BlackOussema/cyber-toolkit.git
-cd cyber-toolkit/cyber-toolkit
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/BlackOussema/cyber-toolkit.git
+    cd cyber-toolkit/cyber-toolkit
+    ```
 
-# Install Python dependencies
-pip install -r requirements.txt
+2.  **Install Python dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-# (Optional) Install APK analysis tools
-# Ubuntu/Debian
-sudo apt install apktool jadx
+3.  **(Optional) Install APK analysis tools**:
+    *   **Ubuntu/Debian**:
+        ```bash
+        sudo apt install apktool jadx
+        ```
+    *   **Arch/BlackArch**:
+        ```bash
+        sudo pacman -S apktool jadx
+        ```
+    *   **macOS**:
+        ```bash
+        brew install apktool jadx
+        ```
 
-# Arch/BlackArch
-sudo pacman -S apktool jadx
+### Docker Installation (Recommended for full environment)
 
-# macOS
-brew install apktool jadx
-```
+1.  **Start all services** (including OWASP ZAP and MobSF):
+    ```bash
+    docker compose up -d
+    ```
 
-### Docker Installation (Recommended)
+2.  **Run with Docker** (example for web scanner):
+    ```bash
+    docker compose run --rm scanner python3 web-scanner/scanner.py example.com
+    ```
 
-```bash
-# Start all services
-docker compose up -d
-
-# Run with Docker
-docker compose run --rm scanner python3 web-scanner/scanner.py example.com
-```
-
----
-
-## 🔧 Usage
+## Usage
 
 ### Web Scanner
 
-```bash
-# Basic scan
-python3 web-scanner/scanner.py example.com
+*   **Basic scan**:
+    ```bash
+    python3 web-scanner/scanner.py https://example.com
+    ```
 
-# Save results to file
-python3 web-scanner/scanner.py example.com -o results/scan.json
+*   **Save results to file**:
+    ```bash
+    python3 web-scanner/scanner.py https://example.com -o results/scan.json
+    ```
 
-# With OWASP ZAP integration
-python3 web-scanner/scanner.py example.com --use-zap
+*   **With OWASP ZAP integration**:
+    ```bash
+    python3 web-scanner/scanner.py https://example.com --use-zap
+    ```
 
-# Disable SSL verification (for testing)
-python3 web-scanner/scanner.py example.com --no-verify-ssl
+*   **Disable SSL verification (for testing)**:
+    ```bash
+    python3 web-scanner/scanner.py https://example.com --no-verify-ssl
+    ```
 
-# Verbose output
-python3 web-scanner/scanner.py example.com -v --stdout
-```
+*   **Verbose output**:
+    ```bash
+    python3 web-scanner/scanner.py https://example.com -v --stdout
+    ```
 
 ### APK Analyzer
 
-```bash
-# Basic analysis
-python3 apk-analyzer/analyze.py app.apk
+*   **Basic analysis**:
+    ```bash
+    python3 apk-analyzer/analyze.py app.apk
+    ```
 
-# Save report to file
-python3 apk-analyzer/analyze.py app.apk -o report.json
+*   **Save report to file**:
+    ```bash
+    python3 apk-analyzer/analyze.py app.apk -o report.json
+    ```
 
-# Skip MobSF (offline analysis)
-python3 apk-analyzer/analyze.py app.apk --no-mobsf
+*   **Skip MobSF (offline analysis)**:
+    ```bash
+    python3 apk-analyzer/analyze.py app.apk --no-mobsf
+    ```
 
-# Keep decompiled files for inspection
-python3 apk-analyzer/analyze.py app.apk --keep-temp
+*   **Keep decompiled files for inspection**:
+    ```bash
+    python3 apk-analyzer/analyze.py app.apk --keep-temp
+    ```
 
-# Use custom secret detection rules
-python3 apk-analyzer/analyze.py app.apk --rules custom_rules.txt
-```
+*   **Use custom secret detection rules**:
+    ```bash
+    python3 apk-analyzer/analyze.py app.apk --rules custom_rules.txt
+    ```
 
 ### Batch Processing
 
-```bash
-# Scan multiple websites
-./run_all.sh --targets targets.txt
+*   **Scan multiple websites**:
+    ```bash
+    ./run_all.sh --targets targets.txt
+    ```
 
-# Analyze multiple APKs
-./run_all.sh --apks /path/to/apks/
+*   **Analyze multiple APKs**:
+    ```bash
+    ./run_all.sh --apks /path/to/apks/
+    ```
 
-# Combined analysis
-./run_all.sh --targets targets.txt --apks /path/to/apks/
-```
+*   **Combined analysis**:
+    ```bash
+    ./run_all.sh --targets targets.txt --apks /path/to/apks/
+    ```
 
 ### Report Generation
 
-```bash
-# Generate HTML report from results
-python3 report_generator.py -d results/ -o report.html
+*   **Generate HTML report from results**:
+    ```bash
+    python3 report_generator.py -d results/ -o report.html
+    ```
 
-# Open in browser
-xdg-open results/report.html  # Linux
-open results/report.html       # macOS
-```
+*   **Open in browser**:
+    ```bash
+    xdg-open results/report.html  # For Linux
+    open results/report.html       # For macOS
+    start results/report.html      # For Windows
+    ```
 
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 cyber-toolkit/
-├── web-scanner/
-│   └── scanner.py          # Web vulnerability scanner
-├── apk-analyzer/
-│   └── analyze.py          # Android APK analyzer
-├── results/                # Scan results (JSON)
-├── report_generator.py     # HTML report generator
-├── run_all.sh             # Batch processing script
-├── docker-compose.yml     # Docker configuration
-├── requirements.txt       # Python dependencies
-└── README.md
+├── web-scanner/            # Contains the web vulnerability scanner module
+│   └── scanner.py          # Main script for web scanning
+├── apk-analyzer/           # Contains the Android APK analyzer module
+│   └── analyze.py          # Main script for APK analysis
+├── results/                # Directory to store scan results (JSON format)
+├── report_generator.py     # Script to generate HTML reports from JSON results
+├── run_all.sh              # Shell script for batch processing of scans/analyses
+├── docker-compose.yml      # Docker Compose configuration for setting up the environment
+├── requirements.txt        # Python dependencies for the toolkit
+└── README.md               # Project documentation (this file)
 ```
 
----
-
-## 🔒 Security Headers Checked
+## Security Headers Checked (Web Scanner)
 
 | Header | Description |
-|--------|-------------|
-| `Content-Security-Policy` | Prevents XSS and injection attacks |
-| `X-Frame-Options` | Prevents clickjacking |
-| `X-Content-Type-Options` | Prevents MIME-type sniffing |
-| `Strict-Transport-Security` | Enforces HTTPS |
-| `Referrer-Policy` | Controls referrer information |
-| `Permissions-Policy` | Restricts browser features |
-| `X-XSS-Protection` | Legacy XSS filter (deprecated) |
+|-----------------------------|-----------------------------------------------------|
+| `Content-Security-Policy`   | Prevents Cross-Site Scripting (XSS) and injection attacks by specifying allowed content sources. |
+| `X-Frame-Options`           | Protects against clickjacking attacks by controlling whether a page can be rendered in a `<frame>`, `<iframe>`, `<embed>`, or `<object>`. |
+| `X-Content-Type-Options`    | Prevents MIME-type sniffing by browsers, reducing exposure to drive-by download attacks. |
+| `Strict-Transport-Security` | Enforces secure connections (HTTPS) by instructing browsers to only access the site using HTTPS. |
+| `Referrer-Policy`           | Controls how much referrer information is included with requests, enhancing user privacy. |
+| `Permissions-Policy`        | Allows or disallows the use of browser features (e.g., camera, microphone) in its own frame and in embedded iframes. |
+| `X-XSS-Protection`          | A legacy header that enables the browser's built-in XSS filter (though CSP is preferred). |
 
----
-
-## 📱 APK Security Checks
+## APK Security Checks (APK Analyzer)
 
 ### Dangerous Permissions Detected
-- Camera, Microphone access
-- Location tracking (fine/coarse)
-- SMS read/send capabilities
-- Contact and call log access
-- Storage permissions
-- Phone state access
-- System alert window
+*   **Camera, Microphone access**: Permissions that allow an app to record audio or video.
+*   **Location tracking (fine/coarse)**: Permissions to access precise or approximate user location.
+*   **SMS read/send capabilities**: Permissions to read or send SMS messages, potentially leading to fraud or privacy breaches.
+*   **Contact and call log access**: Permissions to read user contacts or call history.
+*   **Storage permissions**: Permissions to read from or write to external storage.
+*   **Phone state access**: Permissions to read phone status and identity.
+*   **System alert window**: Permission to draw over other apps, often abused by malware.
 
-### Secret Patterns
-- API keys and tokens
-- AWS credentials
-- Firebase configurations
-- Database connection strings
-- Private keys and certificates
-- OAuth secrets
+### Secret Patterns Identified
+*   **API keys and tokens**: Hardcoded API keys for various services.
+*   **AWS credentials**: Amazon Web Services access keys and secret keys.
+*   **Firebase configurations**: Firebase API keys and project IDs.
+*   **Database connection strings**: Credentials for connecting to databases.
+*   **Private keys and certificates**: Cryptographic keys that should be kept confidential.
+*   **OAuth secrets**: Client secrets for OAuth authentication.
 
----
+## Docker Services
 
-## 🐳 Docker Services
+The `docker-compose.yml` file defines several services for a complete security analysis environment:
 
 ```yaml
-# Available services in docker-compose.yml
+# Example services available in docker-compose.yml
 services:
-  scanner:    # Web scanner container
-  analyzer:   # APK analyzer container
-  zap:        # OWASP ZAP proxy
-  mobsf:      # Mobile Security Framework
+  scanner:    # Web scanner container for web vulnerability analysis
+  analyzer:   # APK analyzer container for Android application security analysis
+  zap:        # OWASP ZAP proxy for dynamic web application security testing
+  mobsf:      # Mobile Security Framework (MobSF) for comprehensive mobile app analysis
 ```
 
 ### Starting Services
 
 ```bash
-# Start ZAP and MobSF
+# Start specific services (e.g., ZAP and MobSF)
 docker compose up -d zap mobsf
 
-# Check status
+# Check the status of running services
 docker compose ps
 
-# View logs
+# View logs of all services
 docker compose logs -f
 ```
 
----
-
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
+Configure external tool integrations using environment variables:
+
 ```bash
-# ZAP Configuration
+# OWASP ZAP Configuration
 export ZAP_BASE="http://localhost:8090"
 
 # MobSF Configuration
 export MOBSF_URL="http://localhost:8000"
-export MOBSF_API_KEY="your-api-key"
+export MOBSF_API_KEY="your-api-key" # Replace with your actual MobSF API key
 ```
 
-### Custom Rules File
+### Custom Rules File (for Secret Detection)
 
-Create a `rules.txt` file with one regex pattern per line:
+Create a `rules.txt` file in the `apk-analyzer/` directory with one regex pattern per line to define custom secret detection rules:
 
 ```
 (?i)api[_-]?key\s*[:=]
 (?i)password\s*[:=]
 AKIA[0-9A-Z]{16}
 (?i)-----BEGIN PRIVATE KEY-----
+# Add your custom regex patterns here
 ```
 
----
+## Sample Output
 
-## 📊 Sample Output
-
-### Web Scan Result
+### Web Scan Result Example
 ```json
 {
   "target": "https://example.com",
@@ -276,7 +287,7 @@ AKIA[0-9A-Z]{16}
 }
 ```
 
-### APK Analysis Result
+### APK Analysis Result Example
 ```json
 {
   "apk_name": "app.apk",
@@ -294,65 +305,58 @@ AKIA[0-9A-Z]{16}
 }
 ```
 
----
+## Contributing
 
-## 🤝 Contributing
+Contributions are highly encouraged! If you have ideas for new features, improvements, or bug fixes, please follow these steps:
 
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1.  Fork the repository.
+2.  Create a new feature branch (`git checkout -b feature/your-awesome-feature`).
+3.  Implement your changes and ensure they are well-tested.
+4.  Commit your changes with a descriptive message (`git commit -m 'Add your awesome feature'`).
+5.  Push to the branch (`git push origin feature/your-awesome-feature`).
+6.  Open a Pull Request, detailing the changes you've made.
 
 ### Development Setup
 
 ```bash
-# Install development dependencies
+# Install development dependencies (e.g., pytest, black, flake8)
 pip install -r requirements-dev.txt
 
-# Run tests
+# Run tests to ensure functionality
 pytest tests/
 
-# Code formatting
+# Format code for consistency
 black .
+
+# Run linting checks
 flake8 .
 ```
 
----
-
-## ⚠️ Legal Disclaimer
+## Legal Disclaimer
 
 **This toolkit is provided for educational and authorized security testing purposes only.**
 
-- Only scan targets you own or have explicit permission to test
-- Unauthorized scanning may violate laws and regulations
-- The authors are not responsible for misuse of this tool
-- Always follow responsible disclosure practices
+*   Only use this tool on targets you own or for which you have explicit, written permission to test.
+*   Unauthorized scanning or analysis of systems may violate laws and regulations and could lead to severe legal consequences.
+*   The authors and contributors are not responsible for any misuse or damage caused by this tool.
+*   Always adhere to responsible disclosure practices when identifying vulnerabilities.
 
----
+## License
 
-## 📄 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for full details.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👤 Author
+## Author
 
 **Ghariani Oussema**
-- GitHub: [@BlackOussema](https://github.com/BlackOussema)
-- Role: Cyber Security Researcher & Full-Stack Developer
+*   GitHub: [@BlackOussema](https://github.com/BlackOussema)
+*   Role: Cybersecurity Researcher & Full-Stack Developer
 
----
+## Acknowledgments
 
-## 🙏 Acknowledgments
-
-- [OWASP ZAP](https://www.zaproxy.org/) - Web security scanner
-- [MobSF](https://mobsf.github.io/Mobile-Security-Framework-MobSF/) - Mobile security framework
-- [apktool](https://ibotpeaches.github.io/Apktool/) - APK reverse engineering
-- [jadx](https://github.com/skylot/jadx) - DEX to Java decompiler
+*   [OWASP ZAP](https://www.zaproxy.org/) - A leading open-source web application security scanner.
+*   [MobSF](https://mobsf.github.io/Mobile-Security-Framework-MobSF/) - An automated, all-in-one mobile application (Android/iOS/Windows) pen-testing, malware analysis and security assessment framework.
+*   [apktool](https://ibotpeaches.github.io/Apktool/) - A reverse engineering tool for Android applications.
+*   [jadx](https://github.com/skylot/jadx) - DEX to Java decompiler.
 
 ---
 
